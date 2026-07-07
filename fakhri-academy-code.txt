@@ -112,7 +112,14 @@ textarea{resize:vertical;}
 /* ── Misc ── */
 .nocopy{user-select:none;-webkit-user-select:none;}
 .img-link{display:block;margin-top:8px;border-radius:12px;overflow:hidden;}
-.img-link img{max-width:100%;border-radius:12px;display:block;}
+.img-link img{max-width:100%;border-radius:12px;display:block;cursor:zoom-in;transition:opacity .15s;}
+.img-link img:hover{opacity:.88;}
+/* ── Lightbox ─────────────────────────────────────────── */
+#lightbox-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:9999;align-items:center;justify-content:center;padding:16px;}
+#lightbox-overlay.open{display:flex;}
+#lightbox-overlay img{max-width:min(92vw,960px);max-height:90vh;border-radius:14px;object-fit:contain;box-shadow:0 8px 48px rgba(0,0,0,.8);}
+#lightbox-close{position:fixed;top:14px;left:16px;background:rgba(255,255,255,.18);border:none;color:#fff;font-size:22px;width:44px;height:44px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;line-height:1;}
+#lightbox-close:hover{background:rgba(255,255,255,.32);}
 </style>
 </head>
 <body class="nocopy">
@@ -1006,7 +1013,7 @@ function addBotMessage(msg) {
     content = `<div style="font-size:14px;line-height:1.7;">${msg.text || ''}</div>`;
   } else if (msg.type === 'image') {
     if (msg.imageUrls && msg.imageUrls.length > 0) {
-      content = msg.imageUrls.map(url => `<div class="img-link"><img src="${escHtml(url)}" alt="صورة" style="max-width:260px;width:100%;border-radius:10px;" onerror="this.style.display='none'"/></div>`).join('');
+      content = msg.imageUrls.map(url => `<div class="img-link"><img src="${escHtml(url)}" alt="صورة" style="max-width:260px;width:100%;border-radius:10px;cursor:zoom-in;transition:opacity .2s;" onclick="openLightbox('${escHtml(url)}')" onerror="this.style.display='none'"/></div>`).join('');
     } else {
       content = '<div style="color:var(--muted);font-size:13px;">لا توجد صور</div>';
     }
@@ -1549,6 +1556,25 @@ document.addEventListener('visibilitychange', () => {
     document.body.style.filter = '';
   }
 });
+</script>
+
+<!-- Lightbox overlay -->
+<div id="lightbox-overlay" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="صورة مكبّرة" onclick="event.stopPropagation()"/>
+</div>
+<script>
+function openLightbox(url) {
+  document.getElementById('lightbox-img').src = url;
+  document.getElementById('lightbox-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox-overlay').classList.remove('open');
+  document.getElementById('lightbox-img').src = '';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 </script>
 </body>
 </html>
