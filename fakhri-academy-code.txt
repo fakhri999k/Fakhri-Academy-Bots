@@ -120,6 +120,107 @@ textarea{resize:vertical;}
 #lightbox-overlay img{max-width:min(92vw,960px);max-height:90vh;border-radius:14px;object-fit:contain;box-shadow:0 8px 48px rgba(0,0,0,.8);}
 #lightbox-close{position:fixed;top:14px;left:16px;background:rgba(255,255,255,.18);border:none;color:#fff;font-size:22px;width:44px;height:44px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;line-height:1;}
 #lightbox-close:hover{background:rgba(255,255,255,.32);}
+/* ── Studio CSS (Isolated) ────────────────────────────── */
+#studio-mode {
+  display: none; position: fixed; inset: 0; background: var(--bg); z-index: 10000; overflow-y: auto; font-family: 'Tajawal', sans-serif; color: var(--text);
+}
+#studio-mode.open { display: block; }
+.studio-header {
+  display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; background: var(--bg2); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10;
+}
+.studio-tabs { display: flex; gap: 10px; }
+.studio-tab {
+  padding: 8px 16px; background: transparent; border: 1px solid var(--border); color: var(--muted); border-radius: 8px; cursor: pointer; font-family: 'Tajawal'; font-weight: 700; transition: 0.2s;
+}
+.studio-tab.active { background: var(--green); color: #fff; border-color: var(--green); }
+.studio-content { padding: 20px; max-width: 1000px; margin: 0 auto; }
+
+/* Gallery */
+.studio-gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.ep-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
+.ep-card-title { font-size: 18px; font-weight: 800; margin-bottom: 16px; }
+.ep-btn-watch { background: var(--green); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; box-shadow: 0 0 10px rgba(16,185,129,0.3); margin-bottom: 8px; }
+.ep-btn-edit { background: var(--bg3); color: var(--text); border: 1px solid var(--border); padding: 8px 20px; border-radius: 8px; cursor: pointer; width: 100%; }
+
+/* Player Stage */
+.studio-stage-wrapper { position: relative; width: 100%; aspect-ratio: 16/9; background: #2c3e50; border-radius: 12px; overflow: hidden; border: 4px solid #1e293b; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px; }
+.studio-bg-board { position: absolute; inset: 20px; background: #1a472a; border: 8px solid #8b4513; border-radius: 8px; }
+.studio-avatar-container { position: absolute; bottom: -10%; left: 50%; transform: translateX(-50%); width: 250px; height: 350px; display: flex; align-items: flex-end; justify-content: center; z-index: 5; }
+.studio-avatar-body { width: 200px; height: 200px; background: #3b82f6; border-radius: 100px 100px 0 0; position: relative; }
+.studio-avatar-head { width: 120px; height: 140px; background: #fcd34d; border-radius: 60px; position: absolute; top: -110px; left: 50%; transform: translateX(-50%); }
+.studio-avatar-eyes { position: absolute; top: 50px; left: 0; width: 100%; display: flex; justify-content: center; gap: 20px; }
+.studio-eye { width: 14px; height: 14px; background: #1e293b; border-radius: 50%; animation: blink 4s infinite; }
+.studio-avatar-mouth { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); width: 40px; height: 4px; background: #1e293b; border-radius: 10px; transition: height 0.05s, border-radius 0.05s; }
+.studio-avatar-arm { position: absolute; top: 40px; right: -20px; width: 40px; height: 120px; background: #2563eb; border-radius: 20px; transform-origin: top center; animation: arm-move 6s infinite alternate ease-in-out; }
+
+@keyframes blink { 0%, 96% { transform: scaleY(1); } 98% { transform: scaleY(0.1); } 100% { transform: scaleY(1); } }
+@keyframes arm-move { 0% { transform: rotate(0deg); } 50% { transform: rotate(-15deg); } 100% { transform: rotate(5deg); } }
+
+/* Player UI */
+.studio-player-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 10; transition: 0.3s; }
+.studio-play-btn { width: 80px; height: 80px; background: rgba(16,185,129,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; color: white; transition: 0.2s; }
+.studio-play-btn:hover { transform: scale(1.1); background: #10b981; }
+.studio-play-icon { width: 0; height: 0; border-top: 15px solid transparent; border-bottom: 15px solid transparent; border-left: 25px solid white; margin-left: 8px; }
+.studio-timeline-bar { background: var(--bg2); padding: 12px; border-radius: 12px; display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.studio-time-text { font-family: monospace; font-size: 14px; font-weight: bold; width: 50px; text-align: center; }
+.studio-slider { flex: 1; accent-color: var(--green); cursor: pointer; }
+
+/* Editor Inputs */
+.studio-element-track { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+
+/* Dynamic Elements in Stage */
+.studio-dynamic-el { position: absolute; z-index: 3; transition: all 0.2s; }
+/* ── Studio CSS (Isolated) ────────────────────────────── */
+#studio-mode {
+  display: none; position: fixed; inset: 0; background: var(--bg); z-index: 10000; overflow-y: auto; font-family: 'Tajawal', sans-serif; color: var(--text);
+}
+#studio-mode.open { display: block; }
+.studio-header {
+  display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; background: var(--bg2); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10;
+}
+.studio-tabs { display: flex; gap: 10px; }
+.studio-tab {
+  padding: 8px 16px; background: transparent; border: 1px solid var(--border); color: var(--muted); border-radius: 8px; cursor: pointer; font-family: 'Tajawal'; font-weight: 700; transition: 0.2s;
+}
+.studio-tab.active { background: var(--green); color: #fff; border-color: var(--green); }
+.studio-content { padding: 20px; max-width: 1000px; margin: 0 auto; }
+
+/* Gallery */
+.studio-gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.ep-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
+.ep-card-title { font-size: 18px; font-weight: 800; margin-bottom: 16px; }
+.ep-btn-watch { background: var(--green); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; box-shadow: 0 0 10px rgba(16,185,129,0.3); margin-bottom: 8px; }
+.ep-btn-edit { background: transparent; color: var(--text); border: 1px solid var(--border); padding: 8px 20px; border-radius: 8px; cursor: pointer; width: 100%; }
+
+/* Player Stage */
+.studio-stage-wrapper { position: relative; width: 100%; aspect-ratio: 16/9; background: #2c3e50; border-radius: 12px; overflow: hidden; border: 4px solid #1e293b; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px; }
+.studio-bg-board { position: absolute; inset: 20px; background: #1a472a; border: 8px solid #8b4513; border-radius: 8px; }
+.studio-avatar-container { position: absolute; bottom: -10%; left: 50%; transform: translateX(-50%); width: 250px; height: 350px; display: flex; align-items: flex-end; justify-content: center; z-index: 5; }
+.studio-avatar-body { width: 200px; height: 200px; background: #3b82f6; border-radius: 100px 100px 0 0; position: relative; transition: background 0.3s; }
+.studio-avatar-head { width: 120px; height: 140px; background: #fcd34d; border-radius: 60px; position: absolute; top: -110px; left: 50%; transform: translateX(-50%); transition: background 0.3s; }
+.studio-avatar-eyes { position: absolute; top: 50px; left: 0; width: 100%; display: flex; justify-content: center; gap: 20px; }
+.studio-eye { width: 14px; height: 14px; background: #1e293b; border-radius: 50%; animation: blink 4s infinite; }
+.studio-avatar-mouth { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); width: 40px; height: 4px; background: #1e293b; border-radius: 10px; transition: height 0.05s, border-radius 0.05s; }
+.studio-avatar-arm { position: absolute; top: 40px; right: -20px; width: 40px; height: 120px; background: #2563eb; border-radius: 20px; transform-origin: top center; animation: arm-move 6s infinite alternate ease-in-out; transition: background 0.3s; }
+
+@keyframes blink { 0%, 96% { transform: scaleY(1); } 98% { transform: scaleY(0.1); } 100% { transform: scaleY(1); } }
+@keyframes arm-move { 0% { transform: rotate(0deg); } 50% { transform: rotate(-15deg); } 100% { transform: rotate(5deg); } }
+
+/* Player UI */
+.studio-player-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 10; transition: 0.3s; }
+.studio-play-btn { width: 80px; height: 80px; background: rgba(16,185,129,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; color: white; transition: 0.2s; }
+.studio-play-btn:hover { transform: scale(1.1); background: #10b981; }
+.studio-play-icon { width: 0; height: 0; border-top: 15px solid transparent; border-bottom: 15px solid transparent; border-left: 25px solid white; margin-left: 8px; }
+.studio-timeline-bar { background: var(--bg2); padding: 12px; border-radius: 12px; display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.studio-time-text { font-family: monospace; font-size: 14px; font-weight: bold; width: 50px; text-align: center; }
+.studio-slider { flex: 1; accent-color: var(--green); cursor: pointer; }
+
+/* Editor Inputs */
+.studio-element-track { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+
+/* Dynamic Elements in Stage */
+.studio-dynamic-el { position: absolute; z-index: 3; transition: opacity 0.2s; display: none; }
+.studio-dynamic-el.visible { display: block; }
 </style>
 </head>
 <body class="nocopy">
@@ -1558,12 +1659,491 @@ document.addEventListener('visibilitychange', () => {
 });
 </script>
 
+<!-- ── Studio HTML (Isolated) ─────────────────────────── -->
+<div id="studio-mode">
+  <div class="studio-header">
+    <div class="studio-tabs">
+      <button class="studio-tab active" id="tab-gallery" onclick="switchStudioTab('gallery')">معرض حلقاتي</button>
+      <button class="studio-tab" id="tab-editor" onclick="switchStudioTab('editor')" style="display:none;">إنشاء / تعديل حلقة</button>
+    </div>
+    <button class="btn btn-ghost" onclick="closeStudio()">✕ إغلاق الاستوديو</button>
+  </div>
+
+  <div class="studio-content">
+    
+    <!-- Gallery View -->
+    <div id="studio-view-gallery">
+      <div style="display:flex; justify-content:space-between; margin-bottom:20px; align-items:center;">
+        <h2 id="gallery-title" style="margin:0;">معرض الحلقات</h2>
+        <button id="btn-new-episode" class="btn btn-green" onclick="createNewEpisode()" style="display:none;">+ حلقة جديدة</button>
+      </div>
+      <div class="studio-gallery-grid" id="studio-gallery-list">
+        <!-- Episodes injected here -->
+      </div>
+    </div>
+
+    <!-- Editor / Player View -->
+    <div id="studio-view-editor" style="display:none;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+        <button class="btn btn-ghost btn-sm" onclick="switchStudioTab('gallery')">← عودة للمعرض</button>
+        <button id="btn-save-episode" class="btn btn-green btn-sm" onclick="saveEpisode()" style="display:none;">💾 حفظ الحلقة</button>
+      </div>
+
+      <!-- THE STAGE -->
+      <div class="studio-stage-wrapper" id="studio-stage">
+        <div class="studio-bg-board" id="studio-board"></div>
+        <div class="studio-avatar-container">
+          <div class="studio-avatar-body" id="avatar-body">
+            <div class="studio-avatar-arm" id="avatar-arm"></div>
+            <div class="studio-avatar-head" id="avatar-head">
+              <div class="studio-avatar-eyes">
+                <div class="studio-eye"></div>
+                <div class="studio-eye"></div>
+              </div>
+              <div class="studio-avatar-mouth" id="avatar-mouth"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Player Overlay (Play Button) -->
+        <div class="studio-player-overlay" id="player-overlay">
+          <button class="studio-play-btn" onclick="toggleStudioPlay()">
+            <div class="studio-play-icon" id="play-icon-shape"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Timeline & Controls -->
+      <div class="studio-timeline-bar">
+        <span class="studio-time-text" id="time-current">0:00</span>
+        <input type="range" class="studio-slider" id="timeline-slider" value="0" min="0" step="0.1" oninput="seekStudio(this.value)">
+        <span class="studio-time-text" id="time-total">0:00</span>
+      </div>
+
+      <!-- Social Stats (Player only) -->
+      <div id="studio-stats" style="display:none; text-align:center; margin-bottom:20px;">
+        <button class="btn btn-ghost" onclick="likeEpisode()" style="color:#ef4444; font-size:16px;">
+          ❤️ <span id="stat-likes">0</span> إعجاب
+        </button>
+        <span style="color:var(--muted); margin-right:16px;">👁 <span id="stat-views">0</span> مشاهدة</span>
+      </div>
+
+      <!-- Editor Panel (Teacher only) -->
+      <div id="studio-editor-panel" style="display:none; background:var(--bg2); padding:20px; border-radius:12px; border:1px solid var(--border);">
+        <h3 style="margin-top:0;">إعدادات الحلقة</h3>
+        
+        <input id="ep-title" placeholder="عنوان الحلقة..." class="word-editor" style="width:100%; min-height:auto; margin-bottom:12px;"/>
+        
+        <div style="display:flex; gap:10px; margin-bottom:12px;">
+          <input id="ep-audio-url" placeholder="رابط الملف الصوتي (ضروري)..." class="word-editor" style="flex:1; min-height:auto;" onchange="loadAudioUrl()"/>
+        </div>
+        
+        <div style="margin-bottom:16px;">
+          <label style="display:block; margin-bottom:8px; font-weight:bold;">اختر الشخصية:</label>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-ghost btn-sm" onclick="setAvatar('m1')">رجل 1</button>
+            <button class="btn btn-ghost btn-sm" onclick="setAvatar('m2')">رجل 2</button>
+            <button class="btn btn-ghost btn-sm" onclick="setAvatar('m3')">رجل 3</button>
+            <button class="btn btn-ghost btn-sm" onclick="setAvatar('f1')">امرأة 1</button>
+            <button class="btn btn-ghost btn-sm" onclick="setAvatar('f2')">امرأة 2</button>
+            <button class="btn btn-ghost btn-sm" onclick="setAvatar('f3')">امرأة 3</button>
+          </div>
+        </div>
+
+        <h3 style="border-top:1px solid var(--border); padding-top:16px;">العناصر على السبورة</h3>
+        <div id="ep-elements-list"></div>
+        <button class="btn btn-ghost btn-sm" style="border:2px dashed var(--border); width:100%;" onclick="addEpElement()">+ إضافة صورة / نص</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!-- Lightbox overlay -->
 <div id="lightbox-overlay" onclick="closeLightbox()">
   <button id="lightbox-close" onclick="closeLightbox()">✕</button>
   <img id="lightbox-img" src="" alt="صورة مكبّرة" onclick="event.stopPropagation()"/>
 </div>
 <script>
+/* ── Studio Logic ────────────────────────────────────────── */
+let _studioEpisodes = [];
+let _currentEpisode = null;
+let _audioCtx, _analyser, _source, _audioEl;
+let _studioRafId;
+let _isPlaying = false;
+let _elements = [];
+
+async function openStudio() {
+  document.getElementById('studio-mode').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  
+  const canEdit = (SESSION.role === 'admin' || SESSION.role === 'developer');
+  
+  if (canEdit) {
+    document.getElementById('tab-editor').style.display = 'block';
+    document.getElementById('btn-new-episode').style.display = 'block';
+    document.getElementById('gallery-title').textContent = 'معرض حلقاتي';
+  } else {
+    document.getElementById('tab-editor').style.display = 'none';
+    document.getElementById('btn-new-episode').style.display = 'none';
+    document.getElementById('gallery-title').textContent = 'استوديو حلقات الأستاذ المطور';
+  }
+  
+  await fetchStudioGallery();
+  switchStudioTab('gallery');
+}
+
+function closeStudio() {
+  document.getElementById('studio-mode').classList.remove('open');
+  document.body.style.overflow = '';
+  stopStudioAudio();
+}
+
+function switchStudioTab(tab) {
+  document.querySelectorAll('.studio-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.getElementById('studio-view-gallery').style.display = tab === 'gallery' ? 'block' : 'none';
+  document.getElementById('studio-view-editor').style.display = tab === 'editor' ? 'block' : 'none';
+  
+  if (tab === 'gallery') {
+    stopStudioAudio();
+  } else {
+    const canEdit = (SESSION.role === 'admin' || SESSION.role === 'developer');
+    document.getElementById('studio-editor-panel').style.display = canEdit ? 'block' : 'none';
+    document.getElementById('btn-save-episode').style.display = canEdit ? 'block' : 'none';
+  }
+}
+
+async function fetchStudioGallery() {
+  try {
+    const { data, error } = await sb.from('interactive_episodes')
+      .select('*')
+      .eq('bot_id', _chatBotId)
+      .order('created_at', { ascending: false });
+      
+    if (error && error.code === '42P01') {
+      _studioEpisodes = [];
+      console.warn("Table interactive_episodes not created yet.");
+      if (SESSION.role === 'admin') alert("تنبيه للأدمن: يجب إنشاء جدول interactive_episodes في Supabase ليعمل الاستوديو.");
+    } else {
+      _studioEpisodes = data || [];
+    }
+    renderStudioGallery();
+  } catch(e) { console.error(e); }
+}
+
+function renderStudioGallery() {
+  const container = document.getElementById('studio-gallery-list');
+  if (_studioEpisodes.length === 0) {
+    container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);">لا توجد حلقات بعد...</div>';
+    return;
+  }
+  const canEdit = (SESSION.role === 'admin' || SESSION.role === 'developer');
+  container.innerHTML = _studioEpisodes.map(ep => `
+    <div class="ep-card">
+      <div class="ep-card-title">${escHtmlDisplay(ep.title || 'حلقة بدون عنوان')}</div>
+      <button class="ep-btn-watch" onclick="watchEpisode('${ep.id}')">▶ مشاهدة الآن!</button>
+      ${canEdit ? `<button class="ep-btn-edit" onclick="editEpisode('${ep.id}')">✏️ تعديل</button>` : ''}
+    </div>
+  `).join('');
+}
+
+function createNewEpisode() {
+  _currentEpisode = {
+    id: 'new_' + Date.now(),
+    bot_id: _chatBotId,
+    title: 'حلقة جديدة',
+    audio_url: '',
+    character: 'm1',
+    elements: [],
+    likes: 0,
+    views: 0
+  };
+  loadEpisodeToEditor();
+  switchStudioTab('editor');
+}
+
+function editEpisode(id) {
+  const ep = _studioEpisodes.find(e => e.id === id);
+  if (!ep) return;
+  _currentEpisode = JSON.parse(JSON.stringify(ep));
+  loadEpisodeToEditor();
+  switchStudioTab('editor');
+}
+
+async function watchEpisode(id) {
+  const ep = _studioEpisodes.find(e => e.id === id);
+  if (!ep) return;
+  _currentEpisode = JSON.parse(JSON.stringify(ep));
+  
+  if (SESSION.role === 'student') {
+    _currentEpisode.views = (_currentEpisode.views || 0) + 1;
+    await sb.from('interactive_episodes').update({ views: _currentEpisode.views }).eq('id', id);
+  }
+  
+  loadEpisodeToEditor();
+  switchStudioTab('editor');
+  
+  document.getElementById('studio-editor-panel').style.display = 'none';
+  document.getElementById('btn-save-episode').style.display = 'none';
+  
+  document.getElementById('studio-stats').style.display = 'block';
+  document.getElementById('stat-likes').textContent = _currentEpisode.likes || 0;
+  document.getElementById('stat-views').textContent = _currentEpisode.views || 0;
+  
+  setTimeout(()=> toggleStudioPlay(), 500);
+}
+
+function loadEpisodeToEditor() {
+  document.getElementById('ep-title').value = _currentEpisode.title || '';
+  document.getElementById('ep-audio-url').value = _currentEpisode.audio_url || '';
+  _elements = _currentEpisode.elements || [];
+  setAvatar(_currentEpisode.character || 'm1');
+  renderEpElements();
+  loadAudioUrl(true);
+}
+
+async function saveEpisode() {
+  if (!_currentEpisode) return;
+  _currentEpisode.title = document.getElementById('ep-title').value.trim();
+  _currentEpisode.audio_url = document.getElementById('ep-audio-url').value.trim();
+  _currentEpisode.elements = _elements;
+  
+  const isNew = _currentEpisode.id.startsWith('new_');
+  const payload = {
+    bot_id: _currentEpisode.bot_id,
+    title: _currentEpisode.title,
+    audio_url: _currentEpisode.audio_url,
+    character: _currentEpisode.character,
+    elements: _currentEpisode.elements,
+    likes: _currentEpisode.likes,
+    views: _currentEpisode.views
+  };
+  
+  try {
+    if (isNew) {
+      const { data, error } = await sb.from('interactive_episodes').insert(payload).select().single();
+      if (error) throw error;
+      _currentEpisode.id = data.id;
+    } else {
+      const { error } = await sb.from('interactive_episodes').update(payload).eq('id', _currentEpisode.id);
+      if (error) throw error;
+    }
+    alert('✅ تم حفظ الحلقة بنجاح!');
+    await fetchStudioGallery();
+  } catch (e) {
+    console.error(e);
+    if (e.code === '42P01') alert('❌ جدول interactive_episodes غير موجود! يجب على الأدمن إنشاء الجدول أولاً في Supabase.');
+    else alert('❌ حدث خطأ أثناء الحفظ.');
+  }
+}
+
+async function likeEpisode() {
+  if (!_currentEpisode || _currentEpisode.id.startsWith('new_')) return;
+  _currentEpisode.likes = (_currentEpisode.likes || 0) + 1;
+  document.getElementById('stat-likes').textContent = _currentEpisode.likes;
+  await sb.from('interactive_episodes').update({ likes: _currentEpisode.likes }).eq('id', _currentEpisode.id);
+}
+
+function setAvatar(type) {
+  if (_currentEpisode) _currentEpisode.character = type;
+  const body = document.getElementById('avatar-body');
+  const head = document.getElementById('avatar-head');
+  const arm = document.getElementById('avatar-arm');
+  
+  body.style.background = '#3b82f6'; arm.style.background = '#2563eb'; head.style.background = '#fcd34d';
+  
+  if (type === 'm2') { body.style.background = '#10b981'; arm.style.background = '#059669'; head.style.background = '#fbbf24'; }
+  if (type === 'm3') { body.style.background = '#6366f1'; arm.style.background = '#4f46e5'; head.style.background = '#f87171'; }
+  if (type === 'f1') { body.style.background = '#ec4899'; arm.style.background = '#db2777'; head.style.background = '#fbcfe8'; }
+  if (type === 'f2') { body.style.background = '#8b5cf6'; arm.style.background = '#7c3aed'; head.style.background = '#e9d5ff'; }
+  if (type === 'f3') { body.style.background = '#14b8a6'; arm.style.background = '#0d9488'; head.style.background = '#ccfbf1'; }
+}
+
+function loadAudioUrl(skipAlert = false) {
+  const url = document.getElementById('ep-audio-url').value.trim();
+  if (!url) {
+    if (!skipAlert) alert('عليك اضافة رابطك الصوتي يا أستاذ!');
+    if (_audioEl) { _audioEl.pause(); _audioEl.src = ''; }
+    return;
+  }
+  
+  if (!_audioEl) {
+    _audioEl = new Audio();
+    _audioEl.crossOrigin = "anonymous";
+    _audioEl.addEventListener('timeupdate', updateTimeline);
+    _audioEl.addEventListener('loadedmetadata', () => {
+      document.getElementById('timeline-slider').max = _audioEl.duration;
+      document.getElementById('time-total').textContent = formatTime(_audioEl.duration);
+    });
+    _audioEl.addEventListener('ended', () => {
+      _isPlaying = false;
+      document.getElementById('player-overlay').style.display = 'flex';
+      cancelAnimationFrame(_studioRafId);
+      document.getElementById('avatar-mouth').style.height = '4px';
+    });
+  }
+  
+  if (_audioEl.src !== url) {
+    _audioEl.src = url;
+    _audioEl.load();
+  }
+}
+
+function toggleStudioPlay() {
+  const url = document.getElementById('ep-audio-url').value.trim();
+  if (!url) { alert('عليك اضافة رابطك الصوتي يا أستاذ!'); return; }
+  
+  if (!_audioEl) loadAudioUrl();
+  
+  if (_isPlaying) {
+    _audioEl.pause();
+    _isPlaying = false;
+    document.getElementById('player-overlay').style.display = 'flex';
+    cancelAnimationFrame(_studioRafId);
+    document.getElementById('avatar-mouth').style.height = '4px';
+  } else {
+    initWebAudio();
+    _audioEl.play().then(() => {
+      _isPlaying = true;
+      document.getElementById('player-overlay').style.display = 'none';
+      if (_audioCtx && _audioCtx.state === 'suspended') _audioCtx.resume();
+      lipSyncLoop();
+    }).catch(e => {
+      console.error(e);
+      alert('الرابط الصوتي غير مدعوم بسبب سياسة الأمان (CORS) أو يتطلب تدخلا. يرجى استخدام رابط مباشر مثل (Imgur/AWS/Supabase Storage) يدعم CORS.');
+    });
+  }
+}
+
+function initWebAudio() {
+  if (_audioCtx) return;
+  try {
+    _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    _analyser = _audioCtx.createAnalyser();
+    _analyser.fftSize = 256;
+    _source = _audioCtx.createMediaElementSource(_audioEl);
+    _source.connect(_analyser);
+    _analyser.connect(_audioCtx.destination);
+  } catch(e) { console.warn("Web Audio API not fully supported or CORS blocked", e); }
+}
+
+function lipSyncLoop() {
+  if (!_isPlaying) return;
+  _studioRafId = requestAnimationFrame(lipSyncLoop);
+  
+  if (_analyser) {
+    const dataArray = new Uint8Array(_analyser.frequencyBinCount);
+    _analyser.getByteFrequencyData(dataArray);
+    let sum = 0;
+    for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
+    const avg = sum / dataArray.length;
+    
+    const mouth = document.getElementById('avatar-mouth');
+    const height = 4 + (avg / 255) * 30;
+    mouth.style.height = height + 'px';
+    mouth.style.borderRadius = height > 10 ? '20px' : '10px';
+  }
+}
+
+function stopStudioAudio() {
+  if (_audioEl) { _audioEl.pause(); _isPlaying = false; }
+  document.getElementById('player-overlay').style.display = 'flex';
+  cancelAnimationFrame(_studioRafId);
+  const mouth = document.getElementById('avatar-mouth');
+  if (mouth) mouth.style.height = '4px';
+}
+
+function seekStudio(val) {
+  if (_audioEl) {
+    _audioEl.currentTime = val;
+    updateTimeline();
+  }
+}
+
+function formatTime(sec) {
+  if (isNaN(sec)) return "0:00";
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60);
+  return m + ":" + (s < 10 ? "0"+s : s);
+}
+
+function updateTimeline() {
+  if (!_audioEl) return;
+  const t = _audioEl.currentTime;
+  document.getElementById('time-current').textContent = formatTime(t);
+  
+  const slider = document.getElementById('timeline-slider');
+  if (_isPlaying) slider.value = t;
+  
+  const stage = document.getElementById('studio-stage');
+  
+  _elements.forEach((el, idx) => {
+    let domEl = document.getElementById('dyn-el-' + idx);
+    if (!domEl) {
+      domEl = document.createElement('div');
+      domEl.id = 'dyn-el-' + idx;
+      domEl.className = 'studio-dynamic-el';
+      if (el.type === 'text') {
+        domEl.textContent = el.content;
+        domEl.style.fontSize = '24px';
+        domEl.style.fontWeight = 'bold';
+        domEl.style.color = el.color || '#ffffff';
+        domEl.style.textShadow = '2px 2px 4px rgba(0,0,0,0.8)';
+      } else if (el.type === 'image') {
+        domEl.innerHTML = `<img src="${escHtml(el.content)}" style="max-width:150px; border-radius:10px; border:2px solid #fff; box-shadow:0 4px 12px rgba(0,0,0,0.5);"/>`;
+      }
+      domEl.style.left = (el.x || 10) + '%';
+      domEl.style.top = (el.y || 10) + '%';
+      domEl.style.transform = `scale(${el.scale || 1})`;
+      stage.appendChild(domEl);
+    }
+    
+    if (t >= el.start && t <= el.end) domEl.classList.add('visible');
+    else domEl.classList.remove('visible');
+  });
+}
+
+function addEpElement() {
+  _elements.push({ type: 'text', content: 'نص جديد', start: 0, end: 10, x: 10, y: 10, scale: 1, color: '#ffffff' });
+  renderEpElements();
+}
+
+function removeEpElement(idx) {
+  _elements.splice(idx, 1);
+  const domEl = document.getElementById('dyn-el-' + idx);
+  if (domEl) domEl.remove();
+  document.querySelectorAll('.studio-dynamic-el').forEach(e => e.remove());
+  renderEpElements();
+}
+
+function renderEpElements() {
+  const container = document.getElementById('ep-elements-list');
+  container.innerHTML = _elements.map((el, idx) => `
+    <div class="studio-element-track">
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+        <strong>عنصر ${idx+1}</strong>
+        <button onclick="removeEpElement(${idx})" class="btn btn-ghost btn-sm" style="color:var(--red);padding:0;">✕ حذف</button>
+      </div>
+      <div style="display:flex; gap:8px; margin-bottom:8px;">
+        <select onchange="_elements[${idx}].type=this.value; document.querySelectorAll('.studio-dynamic-el').forEach(e=>e.remove()); renderEpElements()" style="padding:6px; border-radius:6px; background:var(--input); color:var(--text); border:1px solid var(--border);">
+          <option value="text" ${el.type==='text'?'selected':''}>نص</option>
+          <option value="image" ${el.type==='image'?'selected':''}>صورة</option>
+        </select>
+        <input value="${escHtml(el.content)}" placeholder="${el.type==='text'?'النص...':'رابط الصورة...'}" onchange="_elements[${idx}].content=this.value; document.querySelectorAll('.studio-dynamic-el').forEach(e=>e.remove()); updateTimeline();" style="flex:1; padding:6px; border-radius:6px; background:var(--input); color:var(--text); border:1px solid var(--border);"/>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <label style="font-size:12px;">بداية (ث): <input type="number" value="${el.start}" step="1" onchange="_elements[${idx}].start=Number(this.value); updateTimeline();" style="width:60px;"/></label>
+        <label style="font-size:12px;">نهاية (ث): <input type="number" value="${el.end}" step="1" onchange="_elements[${idx}].end=Number(this.value); updateTimeline();" style="width:60px;"/></label>
+        <label style="font-size:12px;">يسار %: <input type="number" value="${el.x}" step="5" onchange="_elements[${idx}].x=Number(this.value); document.querySelectorAll('.studio-dynamic-el').forEach(e=>e.remove()); updateTimeline();" style="width:60px;"/></label>
+        <label style="font-size:12px;">أعلى %: <input type="number" value="${el.y}" step="5" onchange="_elements[${idx}].y=Number(this.value); document.querySelectorAll('.studio-dynamic-el').forEach(e=>e.remove()); updateTimeline();" style="width:60px;"/></label>
+        <label style="font-size:12px;">تكبير: <input type="number" value="${el.scale}" step="0.1" onchange="_elements[${idx}].scale=Number(this.value); document.querySelectorAll('.studio-dynamic-el').forEach(e=>e.remove()); updateTimeline();" style="width:60px;"/></label>
+        ${el.type==='text' ? `<label style="font-size:12px;">لون: <input type="color" value="${el.color}" onchange="_elements[${idx}].color=this.value; document.querySelectorAll('.studio-dynamic-el').forEach(e=>e.remove()); updateTimeline();" style="width:40px;height:24px;padding:0;"/></label>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
 function openLightbox(url) {
   document.getElementById('lightbox-img').src = url;
   document.getElementById('lightbox-overlay').classList.add('open');
